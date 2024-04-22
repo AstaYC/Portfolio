@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
+use App\Models\Info;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ExperienceController extends Controller
@@ -12,11 +14,10 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $experiences = Experience::all();
+
+        $experiences = Experience::all(); // Access email property using ->email
         return response()->json($experiences);
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -57,6 +58,13 @@ class ExperienceController extends Controller
 
     }
 
+    public function destroy()
+    {
+        $item = Experience::findOrFail(request()->input('_id'));
+        $item->delete();
+
+        return response()->json(['message' => 'Experience deleted successfully']);
+    }
 
 
 }
